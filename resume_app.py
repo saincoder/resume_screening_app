@@ -44,7 +44,51 @@ def main():
 
         except UnicodeDecodeError:
             # if utf-8 decoding fails, try decode with latin-1
-            resume_text = resume_bytes.decode('latine-1')
+            resume_text = resume_bytes.decode('latin-1')
+        
+        # function calling
+        cleaned_resume = cleanResume(resume_text)
+
+        # vectorize the text
+        vectorizer_resume = vectorizer.transform([cleaned_resume])
+
+        # calling the model for prediction
+        prediction = model.predict(vectorizer_resume)[0]
+
+        # show predicited value
+        # st.write(prediction)
+
+        category_mapping = {
+            15: "Java Developer",
+            23: "Testing",
+            8: "DevOps Engineer",
+            20: "Python Developer",
+            24: "Web Designing",
+            12: "HR",
+            13: "Hadoop",
+            3: "Blockchain",
+            18: "ETL Developer",
+            10: "Operations Manager",
+            6: "Data Science",
+            22: "Sales",
+            16: "Mechanical Engineer",
+            1: "Arts",
+            7: "Database",
+            11: "Electrical Engineering",
+            14: "Health and Fitness",
+            19: "PMO",
+            4: "Business Analyst",
+            9: "DotNet Developer",
+            2: "Automation Testing",
+            17: "Network Security Engineer",
+            21: "SAP Developer",
+            5: "Civil Engineer",
+            0: "Advocate"
+         }
+
+        category_name = category_mapping.get(prediction, "Unknown")
+        st.success(f"Predicted Category: {category_name}")
+
 
 
 
